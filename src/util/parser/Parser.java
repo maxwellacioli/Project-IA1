@@ -2,6 +2,8 @@ package util.parser;
 
 import java.lang.reflect.Parameter;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Parser {
 	private String filePath;
@@ -11,9 +13,10 @@ public class Parser {
 	}
 
 	public void test() {
-		String input = new String("{(P v H), ~H} |= P");
-		// String input = new String("(Q > P) > Q ");
+		// String input = new String("{(P v H), ~H} |= P");
+		String input = new String("(P ^ Q) > Q");
 
+		// FIXME Verificar ordem de uso de simplificações
 		// Converte a entrada
 		input = convertInput(input);
 		System.out.println(replaceImplicationIntoAString(input));
@@ -44,41 +47,38 @@ public class Parser {
 		return input;
 	}
 
-	// FIXME apenas uma função de teste
+	// FIXME Remover alguns erros de ordem de substituiççao
 	private String replaceImplicationIntoAString(String sentence) {
 
-		StringBuilder sb = new StringBuilder(sentence);
+		Pattern pattern = Pattern.compile("[(]\\s*.+?\\s*[)]\\s*[>]\\s*[A-Z]");
+		Matcher matcher = pattern.matcher(sentence);
 
-		for (int i = 0; i < sb.length(); i++) {
-			int parenBalan = 0;
+		sentence = appendString(pattern, matcher, sentence);
 
-			if (sb.charAt(i) == '>') {
-				sb.setCharAt(i, 'v');
-				if (sb.charAt(i - 2) == ')') {
-					parenBalan++;
+		// Segunda possibilidade de implicação
+		pattern = Pattern.compile("[A-Z]+?\\s*[>]\\s*[A-Z]");
+		matcher = pattern.matcher(sentence);
 
-					int j = i - 3;
-					while (parenBalan != 0) {
-						if (sb.charAt(j) == '(') {
-							parenBalan--;
-						} else if (sb.charAt(j) == ')') {
-							parenBalan++;
-						}
-						j--;
-					}
-					String s = convertInput(sb.substring(0, j) + " ~ " + sb.substring(j + 1, sb.length()));
-					StringBuilder aux = new StringBuilder(s);
-					sb = aux;
-				} else {
-					String s = convertInput(sb.substring(0, i - 3) + " ~ " + sb.substring(i - 2, sb.length()));
-					StringBuilder aux = new StringBuilder(s);
-					sb = aux;
-				}
-			}
-		}
-
-		sentence = sb.toString();
+		sentence = appendString(pattern, matcher, sentence);
 
 		return sentence;
 	}
+
+	private String appendString(Pattern p, Matcher m, String s) {
+		while (m.find()) {
+			System.out.println(m.group());
+			String sentenceAux = m.group();
+			sentenceAux = sentenceAux.replace(">", "v");
+
+			int i, j;
+			i = m.start();
+			j = m.end();
+			s = s.substring(0, i) + " ~ " + sentenceAux + s.substring(j, s.length());
+
+			m = p.matcher(s);
+		}
+
+		return s;
+	}
+
 }
