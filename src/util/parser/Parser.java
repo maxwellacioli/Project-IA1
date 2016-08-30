@@ -1,5 +1,6 @@
 package util.parser;
 
+import java.lang.reflect.Parameter;
 import java.util.StringTokenizer;
 
 public class Parser {
@@ -43,18 +44,27 @@ public class Parser {
 		return input;
 	}
 
-	// TOFIX apenas uma função de teste
+	// FIXME apenas uma função de teste
 	private String replaceImplicationIntoAString(String sentence) {
 
 		StringBuilder sb = new StringBuilder(sentence);
 
 		for (int i = 0; i < sb.length(); i++) {
+			int parenBalan = 0;
+
 			if (sb.charAt(i) == '>') {
 				sb.setCharAt(i, 'v');
 				if (sb.charAt(i - 2) == ')') {
-					int j = i - 3;
-					while (sb.charAt(j--) != '(') {
+					parenBalan++;
 
+					int j = i - 3;
+					while (parenBalan != 0) {
+						if (sb.charAt(j) == '(') {
+							parenBalan--;
+						} else if (sb.charAt(j) == ')') {
+							parenBalan++;
+						}
+						j--;
 					}
 					String s = convertInput(sb.substring(0, j) + " ~ " + sb.substring(j + 1, sb.length()));
 					StringBuilder aux = new StringBuilder(s);
