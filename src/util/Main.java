@@ -1,4 +1,6 @@
-import parser.Parser;
+package util;
+
+import util.parser.Parser;
 
 public class Main {
 	private static String filePath = "files/input.txt";

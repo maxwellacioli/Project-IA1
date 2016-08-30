@@ -1,6 +1,6 @@
-package grammar;
+package util.grammar;
 
-public enum LogicalOperators {
+public enum LogicalOperator {
 	
 	CONJUNCTION ("^"),
 	DISJUNCTION ("v"),
@@ -10,11 +10,11 @@ public enum LogicalOperators {
 	
 	private String opValue;
 
-	private LogicalOperators(String opValue) {
+	private LogicalOperator(String opValue) {
 		this.opValue = opValue;
 	}
 	
-	public String getEnumValue() {
+	public String getLogicalOperatorValue() {
 		return opValue;
 	}
 }
