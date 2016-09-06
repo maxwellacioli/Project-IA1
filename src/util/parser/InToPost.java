@@ -15,6 +15,7 @@ public class InToPost {
 	}
 
 	// FIXME Tratar negacao dupla
+	//FIXME TRABALHAR COM ARRAYLIST, INPUT SERIA UM ARRAY DE STRING...
 	public ArrayList<String> doTrans() {
 		for (int j = 0; j < input.length(); j++) {
 			char ch = input.charAt(j);

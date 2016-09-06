@@ -1,13 +1,13 @@
 package util;
 
-import util.parser.Parser;
+import util.parser.Lexer;
 
 public class Main {
 	private static String filePath = "files/input.txt";
 	
 	public static void main(String[] args) {
 		
-		Parser parser = new Parser(filePath);
-		parser.test();
+		Lexer lexer = new Lexer(filePath);
+		lexer.printTokens();
 	}
 }
