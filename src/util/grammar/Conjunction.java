@@ -4,6 +4,10 @@ import util.parser.nodetree.LogicalExpression;
 
 public class Conjunction extends NonTerminal {
 
+	public Conjunction() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Conjunction(LogicalExpression leftExpression, LogicalExpression rightExpression) {
 		super.setLeftExpression(leftExpression);
 		super.setRightExpression(rightExpression);

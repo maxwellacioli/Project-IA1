@@ -1,5 +1,13 @@
 package util.grammar;
 
-public class Implication {
+import util.parser.nodetree.LogicalExpression;
+
+public class Implication extends NonTerminal {
+
+	@Override
+	public LogicalExpression interpret() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
