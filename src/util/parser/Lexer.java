@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Lexer {
 	private String filePath;
@@ -13,6 +11,7 @@ public class Lexer {
 	private BufferedReader br;
 	private StringTokenizer st;
 
+	//FIXME Criar array com setenças para A e B em (A |= B)
 	public Lexer(String filePath) {
 		this.filePath = filePath;
 
@@ -36,9 +35,9 @@ public class Lexer {
 
 			br.close();
 		} catch (NullPointerException e) {
-			System.out.println("Arquivo vazio!");
+			System.err.println("Arquivo vazio!");
 		} catch (IOException e) {
-			System.out.println("Arquivo não lido");
+			System.err.println("Arquivo não lido");
 		}
 	}
 
@@ -62,40 +61,4 @@ public class Lexer {
 
 		return input;
 	}
-
-	// // FIXME Remover alguns erros de ordem de substituiççao
-	// private String replaceImplicationIntoAString(String sentence) {
-	//
-	// Pattern pattern = Pattern.compile("[(]\\s*.+?\\s*[)]\\s*[>]\\s*[A-Z]");
-	// Matcher matcher = pattern.matcher(sentence);
-	//
-	// sentence = appendString(pattern, matcher, sentence);
-	//
-	// // Segunda possibilidade de implicação
-	// pattern = Pattern.compile("[A-Z]+?\\s*[>]\\s*[A-Z]");
-	// matcher = pattern.matcher(sentence);
-	//
-	// sentence = appendString(pattern, matcher, sentence);
-	//
-	// return sentence;
-	// }
-	//
-	// // FIXME Método teste
-	// private String appendString(Pattern p, Matcher m, String s) {
-	// while (m.find()) {
-	// System.out.println(m.group());
-	// String sentenceAux = m.group();
-	// sentenceAux = sentenceAux.replace(">", "v");
-	//
-	// int i, j;
-	// i = m.start();
-	// j = m.end();
-	// s = s.substring(0, i) + " ~ " + sentenceAux + s.substring(j, s.length());
-	//
-	// m = p.matcher(s);
-	// }
-	//
-	// return s;
-	// }
-
 }

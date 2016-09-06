@@ -1,10 +1,11 @@
 package util.parser.nodetree;
 
-public interface Node {
+public abstract class Node implements LogicalExpression {
 	
-	public Node getNodeValue();
+	//FIXME Verificar valor a esquerda e valor a direita
+	public abstract Node getNodeValue();
 	
-	public void printStackCommands();
+	public abstract void printStackCommands();
 	
 }
 

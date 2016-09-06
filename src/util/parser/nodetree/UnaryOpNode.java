@@ -1,17 +1,9 @@
 package util.parser.nodetree;
 
-public class UnaryOpNode implements Node {
+public abstract class UnaryOpNode implements LogicalExpression {
 
-	@Override
-	public Node getNodeValue() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Node getNodeValue();
 
-	@Override
-	public void printStackCommands() {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void printStackCommands();
 
 }
