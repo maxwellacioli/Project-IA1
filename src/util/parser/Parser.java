@@ -1,40 +1,42 @@
 package util.parser;
 
-import util.grammar.Biimplication;
+import util.grammar.BiImplication;
 import util.grammar.Conjunction;
 import util.grammar.Disjunction;
 import util.grammar.Implication;
 import util.grammar.LogicalOperator;
+import util.grammar.Negation;
+import util.grammar.Terminal;
 import util.parser.nodetree.LogicalExpression;
 
 public class Parser {
 	private Lexer lexer;
 	private String currentToken;
 	private LogicalExpression root;
-	
+
 	public Parser(Lexer lexer) {
 		this.lexer = lexer;
 	}
-	
+
 	public LogicalExpression build() {
 		logicalexpression();
 		return root;
 	}
 
 	private void logicalexpression() {
-		biimplication();
-		while(currentToken.equals(LogicalOperator.BIIMPLICATION)) {
-			Biimplication biimp = new Biimplication();
-			biimp.setLeftExpression(root);
-			biimplication();
-			biimp.setRightExpression(root);
-			root = biimp;
+		biImplication();
+		while (currentToken.equals(LogicalOperator.BIIMPLICATION)) {
+			BiImplication biImp = new BiImplication();
+			biImp.setLeftExpression(root);
+			biImplication();
+			biImp.setRightExpression(root);
+			root = biImp;
 		}
 	}
 
-	private void biimplication() {
+	private void biImplication() {
 		implication();
-		while(currentToken.equals(LogicalOperator.IMPLICATION)) {
+		while (currentToken.equals(LogicalOperator.IMPLICATION)) {
 			Implication imp = new Implication();
 			imp.setLeftExpression(root);
 			implication();
@@ -45,7 +47,7 @@ public class Parser {
 
 	private void implication() {
 		disjunction();
-		while(currentToken.equals(LogicalOperator.DISJUNCTION)) {
+		while (currentToken.equals(LogicalOperator.DISJUNCTION)) {
 			Disjunction disj = new Disjunction();
 			disj.setLeftExpression(root);
 			disjunction();
@@ -56,7 +58,7 @@ public class Parser {
 
 	private void disjunction() {
 		conjunction();
-		while(currentToken.equals(LogicalOperator.CONJUNCTION)) {
+		while (currentToken.equals(LogicalOperator.CONJUNCTION)) {
 			Conjunction conj = new Conjunction();
 			conj.setLeftExpression(root);
 			conjunction();
@@ -65,10 +67,10 @@ public class Parser {
 		}
 	}
 
-	//FIXME Operador Unario.... como resolver?
+	// FIXME Operador Unario.... como resolver?
 	private void conjunction() {
 		negation();
-		while(currentToken.equals(LogicalOperator.NEGATION)) {
+		while (currentToken.equals(LogicalOperator.NEGATION)) {
 			Conjunction conj = new Conjunction();
 			conj.setLeftExpression(root);
 			conjunction();
@@ -77,11 +79,39 @@ public class Parser {
 		}
 	}
 
-	//FIXME Verificar a necessidade desse método
 	private void negation() {
-		// TODO Auto-generated method stub
-		
+		parentheses();
+		while (currentToken.equals(LogicalOperator.NEGATION)) {
+			Negation neg = new Negation();
+			terminal();
+			neg.setChild(root);
+		}
 	}
 
-	
+	private void parentheses() {
+		if (currentToken.equals("(")) {
+			currentToken = lexer.getStringTokenizer().nextToken();
+			logicalexpression();
+			try {
+				if (!currentToken.equals(")")) {
+					throw new ParserErrorException();
+				}
+			} catch (ParserErrorException e) {
+				System.err.println("Missing close parentheses!");
+			}
+		}
+	}
+
+	// TODO Criar classe do terminal
+	private void terminal() {
+		currentToken = lexer.getStringTokenizer().nextToken();
+		Terminal term;
+		if (currentToken.matches("[A-Z]")) {
+			term = new Terminal(currentToken);
+		} else {
+			term = new Terminal(Boolean.valueOf(currentToken));
+		}
+		root = term;
+		currentToken = lexer.getStringTokenizer().nextToken();
+	}
 }

@@ -11,4 +11,8 @@ public class ParserErrorException extends Exception {
 		super(string);
 	}
 	
+	public ParserErrorException() {
+
+	}
+	
 }

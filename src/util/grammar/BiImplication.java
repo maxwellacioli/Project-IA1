@@ -2,7 +2,7 @@ package util.grammar;
 
 import util.parser.nodetree.LogicalExpression;
 
-public class Biimplication extends NonTerminal {
+public class BiImplication extends NonTerminal {
 
 	//TODO CRIAR CONSTRUTOR COM OS DOIS FILHOS DESSE NÓ
 	@Override

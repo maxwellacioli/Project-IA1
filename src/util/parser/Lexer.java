@@ -61,4 +61,8 @@ public class Lexer {
 
 		return input;
 	}
+	
+	public StringTokenizer getStringTokenizer(){
+		return st;
+	}
 }
