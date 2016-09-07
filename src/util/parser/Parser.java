@@ -16,6 +16,7 @@ public class Parser {
 
 	public Parser(Lexer lexer) {
 		this.lexer = lexer;
+		currentToken = lexer.getStringTokenizer().nextToken();
 	}
 
 	public LogicalExpression build() {
@@ -25,7 +26,7 @@ public class Parser {
 
 	private void logicalexpression() {
 		biImplication();
-		while (currentToken.equals(LogicalOperator.BIIMPLICATION)) {
+		while (currentToken.equals(LogicalOperator.BIIMPLICATION.getLogicalOperatorValue())) {
 			BiImplication biImp = new BiImplication();
 			biImp.setLeftExpression(root);
 			biImplication();
@@ -36,7 +37,7 @@ public class Parser {
 
 	private void biImplication() {
 		implication();
-		while (currentToken.equals(LogicalOperator.IMPLICATION)) {
+		while (currentToken.equals(LogicalOperator.IMPLICATION.getLogicalOperatorValue())) {
 			Implication imp = new Implication();
 			imp.setLeftExpression(root);
 			implication();
@@ -47,7 +48,7 @@ public class Parser {
 
 	private void implication() {
 		disjunction();
-		while (currentToken.equals(LogicalOperator.DISJUNCTION)) {
+		while (currentToken.equals(LogicalOperator.DISJUNCTION.getLogicalOperatorValue())) {
 			Disjunction disj = new Disjunction();
 			disj.setLeftExpression(root);
 			disjunction();
@@ -58,7 +59,7 @@ public class Parser {
 
 	private void disjunction() {
 		conjunction();
-		while (currentToken.equals(LogicalOperator.CONJUNCTION)) {
+		while (currentToken.equals(LogicalOperator.CONJUNCTION.getLogicalOperatorValue())) {
 			Conjunction conj = new Conjunction();
 			conj.setLeftExpression(root);
 			conjunction();
@@ -70,7 +71,7 @@ public class Parser {
 	// FIXME Operador Unario.... como resolver?
 	private void conjunction() {
 		negation();
-		while (currentToken.equals(LogicalOperator.NEGATION)) {
+		while (currentToken.equals(LogicalOperator.NEGATION.getLogicalOperatorValue())) {
 			Conjunction conj = new Conjunction();
 			conj.setLeftExpression(root);
 			conjunction();
@@ -81,7 +82,7 @@ public class Parser {
 
 	private void negation() {
 		parentheses();
-		while (currentToken.equals(LogicalOperator.NEGATION)) {
+		while (currentToken.equals(LogicalOperator.NEGATION.getLogicalOperatorValue())) {
 			Negation neg = new Negation();
 			terminal();
 			neg.setChild(root);
@@ -99,12 +100,13 @@ public class Parser {
 			} catch (ParserErrorException e) {
 				System.err.println("Missing close parentheses!");
 			}
+		} else {
+			terminal();
 		}
 	}
 
 	// TODO Criar classe do terminal
 	private void terminal() {
-		currentToken = lexer.getStringTokenizer().nextToken();
 		Terminal term;
 		if (currentToken.matches("[A-Z]")) {
 			term = new Terminal(currentToken);

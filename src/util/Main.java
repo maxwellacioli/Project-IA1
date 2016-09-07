@@ -1,6 +1,7 @@
 package util;
 
 import util.parser.Lexer;
+import util.parser.Parser;
 
 public class Main {
 	private static String filePath = "files/input.txt";
@@ -8,6 +9,8 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Lexer lexer = new Lexer(filePath);
-		lexer.printTokens();
+		
+		Parser parser = new Parser(lexer);
+		parser.build();
 	}
 }
