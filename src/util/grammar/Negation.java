@@ -2,7 +2,7 @@ package util.grammar;
 
 import util.parser.nodetree.LogicalExpression;
 
-public class Negation extends NonTerminal {
+public class Negation extends LogicalExpression {
 
 	protected LogicalExpression child;
 	

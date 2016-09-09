@@ -12,5 +12,7 @@ public class Main {
 		
 		Parser parser = new Parser(lexer);
 		parser.build();
+		
+		System.out.println("Teste!");
 	}
 }

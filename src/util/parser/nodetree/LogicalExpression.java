@@ -1,5 +1,6 @@
 package util.parser.nodetree;
 
-public interface LogicalExpression {
-	public LogicalExpression interpret();
+public abstract class LogicalExpression {
+	public boolean parentheses = false;
+	public abstract LogicalExpression interpret();
 }

@@ -2,7 +2,7 @@ package util.grammar;
 
 import util.parser.nodetree.LogicalExpression;
 
-public abstract class NonTerminal implements LogicalExpression {
+public abstract class NonTerminal extends LogicalExpression {
 	protected LogicalExpression leftExpression;
 	protected LogicalExpression rightExpression;
 
@@ -13,5 +13,4 @@ public abstract class NonTerminal implements LogicalExpression {
 	public void setRightExpression(LogicalExpression rightExpression) {
 		this.rightExpression = rightExpression;
 	}
-
 }

@@ -2,7 +2,7 @@ package util.grammar;
 
 import util.parser.nodetree.LogicalExpression;
 
-public class Terminal implements LogicalExpression {
+public class Terminal extends LogicalExpression {
 	
 	protected Boolean booleanValue;
 	protected String value;
