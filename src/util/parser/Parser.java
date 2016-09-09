@@ -27,6 +27,7 @@ public class Parser {
 	private void logicalexpression() {
 		biImplication();
 		while (currentToken.equals(LogicalOperator.BIIMPLICATION.getLogicalOperatorValue())) {
+			currentToken = nextToken(currentToken);
 			BiImplication biImp = new BiImplication();
 			biImp.setLeftExpression(root);
 			biImplication();
@@ -38,6 +39,7 @@ public class Parser {
 	private void biImplication() {
 		implication();
 		while (currentToken.equals(LogicalOperator.IMPLICATION.getLogicalOperatorValue())) {
+			currentToken = nextToken(currentToken);
 			Implication imp = new Implication();
 			imp.setLeftExpression(root);
 			implication();
@@ -49,6 +51,7 @@ public class Parser {
 	private void implication() {
 		disjunction();
 		while (currentToken.equals(LogicalOperator.DISJUNCTION.getLogicalOperatorValue())) {
+			currentToken = nextToken(currentToken);
 			Disjunction disj = new Disjunction();
 			disj.setLeftExpression(root);
 			disjunction();
@@ -60,6 +63,7 @@ public class Parser {
 	private void disjunction() {
 		conjunction();
 		while (currentToken.equals(LogicalOperator.CONJUNCTION.getLogicalOperatorValue())) {
+			currentToken = nextToken(currentToken);
 			Conjunction conj = new Conjunction();
 			conj.setLeftExpression(root);
 			conjunction();
@@ -72,6 +76,7 @@ public class Parser {
 	private void conjunction() {
 		negation();
 		while (currentToken.equals(LogicalOperator.NEGATION.getLogicalOperatorValue())) {
+			currentToken = nextToken(currentToken);
 			Conjunction conj = new Conjunction();
 			conj.setLeftExpression(root);
 			conjunction();
@@ -83,6 +88,7 @@ public class Parser {
 	private void negation() {
 		parentheses();
 		while (currentToken.equals(LogicalOperator.NEGATION.getLogicalOperatorValue())) {
+			currentToken = nextToken(currentToken);
 			Negation neg = new Negation();
 			terminal();
 			neg.setChild(root);
@@ -91,10 +97,12 @@ public class Parser {
 
 	private void parentheses() {
 		if (currentToken.equals("(")) {
-			currentToken = lexer.getStringTokenizer().nextToken();
+			currentToken = nextToken(currentToken);
 			logicalexpression();
 			try {
-				if (!currentToken.equals(")")) {
+				if (currentToken.equals(")")) {
+					currentToken = nextToken(currentToken);
+				} else {
 					throw new ParserErrorException();
 				}
 			} catch (ParserErrorException e) {
@@ -114,6 +122,15 @@ public class Parser {
 			term = new Terminal(Boolean.valueOf(currentToken));
 		}
 		root = term;
-		currentToken = lexer.getStringTokenizer().nextToken();
+		currentToken = nextToken(currentToken);
+	}
+
+	// FIXME Verificar necessidade do retorno null
+	private String nextToken(String currentToken) {
+		if (lexer.getStringTokenizer().hasMoreTokens()) {
+			return lexer.getStringTokenizer().nextToken();
+		} else {
+			return "";
+		}
 	}
 }
