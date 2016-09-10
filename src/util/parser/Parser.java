@@ -97,7 +97,6 @@ public class Parser {
 		}
 	}
 
-	// TODO Criar classe do terminal
 	private void terminal() {
 		Terminal term;
 		if (currentToken.matches("[A-Z]")) {
@@ -109,7 +108,6 @@ public class Parser {
 		currentToken = nextToken();
 	}
 
-	// FIXME Verificar necessidade do retorno null
 	private String nextToken() {
 		if (lexer.getStringTokenizer().hasMoreTokens()) {
 			return lexer.getStringTokenizer().nextToken();
