@@ -1,7 +1,5 @@
 package util.grammar;
 
-import util.parser.nodetree.LogicalExpression;
-
 public class Disjunction extends NonTerminal {
 
 	@Override

@@ -1,7 +1,5 @@
 package util.grammar;
 
-import util.parser.nodetree.LogicalExpression;
-
 public class Conjunction extends NonTerminal {
 
 	public Conjunction() {

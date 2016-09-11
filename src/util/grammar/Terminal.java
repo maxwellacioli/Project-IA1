@@ -1,7 +1,5 @@
 package util.grammar;
 
-import util.parser.nodetree.LogicalExpression;
-
 public class Terminal extends LogicalExpression {
 	
 	protected Boolean booleanValue;

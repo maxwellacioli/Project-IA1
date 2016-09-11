@@ -4,10 +4,10 @@ import util.grammar.BiImplication;
 import util.grammar.Conjunction;
 import util.grammar.Disjunction;
 import util.grammar.Implication;
+import util.grammar.LogicalExpression;
 import util.grammar.LogicalOperator;
 import util.grammar.Negation;
 import util.grammar.Terminal;
-import util.parser.nodetree.LogicalExpression;
 
 public class Parser {
 	private Lexer lexer;
@@ -117,7 +117,11 @@ public class Parser {
 	}
 
 	// TODO percorrer a arvore...
-	public void printAST() {
-
+	public void printAST(LogicalExpression node) {
+		if(node == null) {
+			return;
+		} else if(node instanceof Terminal) {
+			System.out.println(node.toString());
+		}
 	}
 }

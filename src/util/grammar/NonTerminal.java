@@ -1,7 +1,5 @@
 package util.grammar;
 
-import util.parser.nodetree.LogicalExpression;
-
 public abstract class NonTerminal extends LogicalExpression {
 	protected LogicalExpression leftExpression;
 	protected LogicalExpression rightExpression;
