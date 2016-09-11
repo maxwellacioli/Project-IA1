@@ -11,4 +11,12 @@ public abstract class NonTerminal extends LogicalExpression {
 	public void setRightExpression(LogicalExpression rightExpression) {
 		this.rightExpression = rightExpression;
 	}
+
+	public LogicalExpression getLeftExpression() {
+		return leftExpression;
+	}
+
+	public LogicalExpression getRightExpression() {
+		return rightExpression;
+	}
 }

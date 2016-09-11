@@ -7,6 +7,7 @@ import util.grammar.Implication;
 import util.grammar.LogicalExpression;
 import util.grammar.LogicalOperator;
 import util.grammar.Negation;
+import util.grammar.NonTerminal;
 import util.grammar.Terminal;
 
 public class Parser {
@@ -86,7 +87,7 @@ public class Parser {
 			} catch (ParserErrorException e) {
 				System.err.println("Missing close parentheses!");
 			}
-		} else if(currentToken.equals(LogicalOperator.NEGATION.getLogicalOperatorValue())){
+		} else if (currentToken.equals(LogicalOperator.NEGATION.getLogicalOperatorValue())) {
 			currentToken = nextToken();
 			Negation neg = new Negation();
 			factor();
@@ -116,12 +117,24 @@ public class Parser {
 		}
 	}
 
-	// TODO percorrer a arvore...
+	// FIXME percorrer a arvore...
 	public void printAST(LogicalExpression node) {
-		if(node == null) {
+		if (node == null) {
 			return;
-		} else if(node instanceof Terminal) {
-			System.out.println(node.toString());
 		}
+
+		if (node instanceof Terminal) {
+			System.out.println(node.toString());
+		} else if (node instanceof Negation) {
+			printAST(((Negation) node).getChild());
+		} else {
+			printAST(((NonTerminal) node).getLeftExpression());
+			printAST(((NonTerminal) node).getRightExpression());
+		}
+
+	}
+
+	public LogicalExpression getRoot() {
+		return root;
 	}
 }

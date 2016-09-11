@@ -8,6 +8,10 @@ public class Negation extends LogicalExpression {
 		this.child = child;
 	}
 	
+	public LogicalExpression getChild() {
+		return child;
+	}
+	
 	@Override
 	public LogicalExpression interpret() {
 		// TODO Auto-generated method stub
