@@ -34,6 +34,7 @@ public class Parser {
 			implication();
 			biImp.setRightExpression(root);
 			root = biImp;
+			setChildrenFather(root);
 		}
 	}
 
@@ -46,6 +47,7 @@ public class Parser {
 			disjunction();
 			imp.setRightExpression(root);
 			root = imp;
+			setChildrenFather(root);
 		}
 	}
 
@@ -58,6 +60,7 @@ public class Parser {
 			conjunction();
 			disj.setRightExpression(root);
 			root = disj;
+			setChildrenFather(root);
 		}
 	}
 
@@ -70,6 +73,7 @@ public class Parser {
 			factor();
 			conj.setRightExpression(root);
 			root = conj;
+			setChildrenFather(root);
 		}
 	}
 
@@ -93,6 +97,7 @@ public class Parser {
 			factor();
 			neg.setChild(root);
 			root = neg;
+			setChildrenFather(root);
 		} else {
 			terminal();
 		}
@@ -117,8 +122,7 @@ public class Parser {
 		}
 	}
 
-	// FIXME percorrer a arvore...
-	public void printAST(LogicalExpression node) {
+	public void printASTStack(LogicalExpression node) {
 		if (node == null) {
 			return;
 		}
@@ -126,15 +130,37 @@ public class Parser {
 		if (node instanceof Terminal) {
 			System.out.println(node.toString());
 		} else if (node instanceof Negation) {
-			printAST(((Negation) node).getChild());
+			// printVisit(node);
+			printASTStack(((Negation) node).getChild());
 		} else {
-			printAST(((NonTerminal) node).getLeftExpression());
-			printAST(((NonTerminal) node).getRightExpression());
+			printASTStack(((NonTerminal) node).getLeftExpression());
+			printASTStack(((NonTerminal) node).getRightExpression());
 		}
+		printVisit(node);
+	}
 
+	private void printVisit(LogicalExpression node) {
+		if (node instanceof Conjunction) {
+			System.out.println("^");
+		} else if (node instanceof Disjunction) {
+			System.out.println("v");
+		} else if (node instanceof Implication) {
+			System.out.println(">");
+		} else if (node instanceof Negation) {
+			System.out.println("~");
+		}
 	}
 
 	public LogicalExpression getRoot() {
 		return root;
+	}
+
+	private void setChildrenFather(LogicalExpression node) {
+		if (node instanceof Negation) {
+			((Negation) node).getChild().setFather(node);
+		} else if (node instanceof NonTerminal) {
+			((NonTerminal) node).getLeftExpression().setFather(node);
+			((NonTerminal) node).getRightExpression().setFather(node);
+		}
 	}
 }

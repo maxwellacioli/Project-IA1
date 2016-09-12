@@ -12,6 +12,7 @@ public class Main {
 		
 		Parser parser = new Parser(lexer);
 		parser.build();
-		parser.printAST(parser.getRoot());
+		parser.printASTStack(parser.getRoot());
+		System.out.println("#####");
 	}
 }
