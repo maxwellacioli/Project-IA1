@@ -145,7 +145,8 @@ public class Parser {
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
 		} else if (node instanceof Implication) {
-			System.out.println(">");
+			 System.out.println(">");
+			((Implication) node).solveImplication();
 		} else if (node instanceof Negation) {
 			System.out.println("~");
 		}

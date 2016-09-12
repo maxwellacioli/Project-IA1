@@ -2,7 +2,7 @@ package util.grammar;
 
 public abstract class LogicalExpression {
 	//FIXME Consertar controle de acesso deste booleano
-	protected boolean parentheses = false;
+	public boolean parentheses = false;
 	protected LogicalExpression father = null;
 	public abstract LogicalExpression interpret();
 	
