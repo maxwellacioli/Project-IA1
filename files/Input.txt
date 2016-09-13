@@ -1,1 +1,1 @@
-(P > H) > P
+(false ^ B) ^ B

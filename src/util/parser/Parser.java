@@ -146,7 +146,7 @@ public class Parser {
 	private void printVisit(LogicalExpression node) {
 		if (node instanceof Conjunction) {
 			System.out.println("^");
-//			((Conjunction) node).solve(this);
+			((Conjunction) node).solve(this);
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
 		} else if (node instanceof Implication) {
