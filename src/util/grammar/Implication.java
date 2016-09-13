@@ -9,7 +9,7 @@ import util.parser.Parser;
 public class Implication extends NonTerminal {
 
 	@Override
-	public LogicalExpression interpret() {
+	public LogicalExpression solve() {
 
 		return null;
 	}

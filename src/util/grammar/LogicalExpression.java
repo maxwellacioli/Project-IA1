@@ -4,7 +4,7 @@ public abstract class LogicalExpression {
 	//FIXME Consertar controle de acesso deste booleano
 	public boolean parentheses = false;
 	protected LogicalExpression father = null;
-	public abstract LogicalExpression interpret();
+	public abstract LogicalExpression solve();
 	
 	public void setFather(LogicalExpression father) {
 		this.father = father;

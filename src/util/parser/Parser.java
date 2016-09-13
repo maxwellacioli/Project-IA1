@@ -128,7 +128,11 @@ public class Parser {
 		}
 
 		if (node instanceof Terminal) {
-			System.out.println(node.toString());
+			if(((Terminal) node).getBooleanValue()!= null) {
+				System.out.println(((Terminal) node).getBooleanValue());
+			} else {
+				System.out.println(((Terminal) node).getValue());
+			}
 		} else if (node instanceof Negation) {
 			// printVisit(node);
 			printASTStack(((Negation) node).getChild());
@@ -142,6 +146,7 @@ public class Parser {
 	private void printVisit(LogicalExpression node) {
 		if (node instanceof Conjunction) {
 			System.out.println("^");
+//			((Conjunction) node).solve(this);
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
 		} else if (node instanceof Implication) {

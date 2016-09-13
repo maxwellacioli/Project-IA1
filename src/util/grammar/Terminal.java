@@ -1,7 +1,6 @@
 package util.grammar;
 
 public class Terminal extends LogicalExpression {
-	
 	protected Boolean booleanValue;
 	protected String value;
 	
@@ -22,7 +21,7 @@ public class Terminal extends LogicalExpression {
 	}
 
 	@Override
-	public LogicalExpression interpret() {
+	public LogicalExpression solve() {
 		// TODO Auto-generated method stub
 		return null;
 	}
