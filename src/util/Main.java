@@ -6,6 +6,7 @@ import util.parser.Parser;
 public class Main {
 	private static String filePath = "files/input.txt";
 	
+	//FIXME Diminuir o uso de codigo na main
 	public static void main(String[] args) {
 		
 		Lexer lexer = new Lexer(filePath);

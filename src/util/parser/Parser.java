@@ -145,9 +145,9 @@ public class Parser {
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
 		} else if (node instanceof Implication) {
-			 System.out.println(">");
-			 //TODO genelizar metodo de resolução da expressao
-			((Implication) node).solveImplication();
+			//FIXME Generalizar 
+			System.out.println(">");
+			((Implication) node).solve(this);
 		} else if (node instanceof Negation) {
 			System.out.println("~");
 		}
@@ -155,6 +155,10 @@ public class Parser {
 
 	public LogicalExpression getRoot() {
 		return root;
+	}
+	
+	public void setRoot(LogicalExpression root) {
+		this.root = root;
 	}
 
 	private void setChildrenFather(LogicalExpression node) {
