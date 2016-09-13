@@ -12,6 +12,7 @@ public class Implication extends NonTerminal {
 		return null;
 	}
 
+	//FIXME Muito codigo repetido(catches)
 	public void solveImplication() {
 		Disjunction disj = new Disjunction();
 		Negation neg = new Negation();
@@ -22,8 +23,29 @@ public class Implication extends NonTerminal {
 		disj.setLeftExpression(neg);
 		disj.setRightExpression(getRightExpression());
 
-		// TODO implementar quando o pai for uma negacao(apenas um filho)
-		if (getFather() instanceof NonTerminal) {
+		if (getFather() instanceof Negation) {
+			try {
+				Method setChildMethod = getFather().getClass().getSuperclass().getDeclaredMethod("setChild",
+						LogicalExpression.class);
+
+				setChildMethod.invoke(getFather(), disj);
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (getFather() instanceof NonTerminal) {
 			try {
 				Field field = getFather().getClass().getSuperclass().getDeclaredField("leftExpression");
 

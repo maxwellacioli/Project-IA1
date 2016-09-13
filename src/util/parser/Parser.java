@@ -146,6 +146,7 @@ public class Parser {
 			System.out.println("v");
 		} else if (node instanceof Implication) {
 			 System.out.println(">");
+			 //TODO genelizar metodo de resolução da expressao
 			((Implication) node).solveImplication();
 		} else if (node instanceof Negation) {
 			System.out.println("~");
