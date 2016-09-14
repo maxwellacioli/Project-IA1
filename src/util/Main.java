@@ -13,9 +13,8 @@ public class Main {
 
 		Parser parser = new Parser(lexer);
 		parser.build();
-		parser.printASTStack(parser.getRoot());
+		parser.walkPostOrderAST(parser.getRoot());
 		System.out.println("##### After Operations #####");
-		parser.printASTStack(parser.getRoot());
-
+		parser.walkPostOrderAST(parser.getRoot());
 	}
 }

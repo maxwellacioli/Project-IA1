@@ -14,19 +14,21 @@ public class Conjunction extends NonTerminal {
 		return null;
 	}
 
-	//FIXME Resolver A ^ true = A
 	public LogicalExpression solve(Parser parser) {
+
 		// TODO Implementar equivalencias logicas
+		// TODO Implementar A ^ A = A
+		// FIXME Ordem de utilização de equivalencias logicas
 		if (getLeftExpression() instanceof Terminal) {
-			Terminal term = (Terminal) getLeftExpression();
-			if (term.getBooleanValue() != null) { //Está ocorrando curto circuito, ocasionando nao resolucao da expressao
-				booleanConjunctionEquivalence(getLeftExpression(), parser);
-			}
-		} else if (getRightExpression() instanceof Terminal) {
-			Terminal term = (Terminal) getRightExpression();
-			if (term.getBooleanValue() != null) {
-				booleanConjunctionEquivalence(getRightExpression(), parser);
-			}
+			booleanConjunctionEquivalence(getLeftExpression(), parser);
+		}
+		if (getRightExpression() instanceof Terminal) {
+			booleanConjunctionEquivalence(getRightExpression(), parser);
+		}
+		// #########
+
+		if (getLeftExpression() instanceof NonTerminal) {
+
 		} else {
 
 		}
@@ -34,11 +36,9 @@ public class Conjunction extends NonTerminal {
 		return null;
 	}
 
-	// FIXME Ordem de resolução de equivalencias errada
 	private void booleanConjunctionEquivalence(LogicalExpression terminal, Parser parser) {
 		Terminal term = (Terminal) terminal;
 
-		// TODO Implementar A ^ A = A
 		if (term.getBooleanValue().equals(Boolean.FALSE)) {
 			Terminal falseValue = new Terminal(Boolean.FALSE);
 
@@ -47,7 +47,9 @@ public class Conjunction extends NonTerminal {
 			} else {
 				parser.setRoot(falseValue);
 			}
-		} else if (term.getBooleanValue().equals(Boolean.TRUE)) {
+		}
+
+		if (term.getBooleanValue().equals(Boolean.TRUE)) {
 
 			if (this.getLeftExpression().equals(terminal)) {
 				terminal = getRightExpression();

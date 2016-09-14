@@ -122,35 +122,58 @@ public class Parser {
 		}
 	}
 
-	public void printASTStack(LogicalExpression node) {
+	public void walkPostOrderAST(LogicalExpression node) {
 		if (node == null) {
 			return;
 		}
 
 		if (node instanceof Terminal) {
-			if(((Terminal) node).getBooleanValue()!= null) {
+			if (((Terminal) node).getBooleanValue() != null) {
 				System.out.println(((Terminal) node).getBooleanValue());
 			} else {
 				System.out.println(((Terminal) node).getValue());
 			}
 		} else if (node instanceof Negation) {
 			// printVisit(node);
-			printASTStack(((Negation) node).getChild());
+			walkPostOrderAST(((Negation) node).getChild());
 		} else {
-			printASTStack(((NonTerminal) node).getLeftExpression());
-			printASTStack(((NonTerminal) node).getRightExpression());
+			walkPostOrderAST(((NonTerminal) node).getLeftExpression());
+			walkPostOrderAST(((NonTerminal) node).getRightExpression());
 		}
-		printVisit(node);
+		visitNode(node);
 	}
 
-	private void printVisit(LogicalExpression node) {
+	// Percorrer AST de cima para baixo
+	public void walkPreOrderAST(LogicalOperator terminal, LogicalExpression node, LogicalExpression nonTerminal) {
+		if (node == null) {
+			return;
+		}
+
+		if (node instanceof Terminal) {
+			visitNode(node);
+			if (((Terminal) node).getBooleanValue() != null) {
+				System.out.println(((Terminal) node).getBooleanValue());
+			} else {
+				System.out.println(((Terminal) node).getValue());
+			}
+		} else if (node instanceof Negation) {
+			visitNode(node);
+			walkPostOrderAST(((Negation) node).getChild());
+		} else {
+			visitNode(node);
+			walkPostOrderAST(((NonTerminal) node).getLeftExpression());
+			walkPostOrderAST(((NonTerminal) node).getRightExpression());
+		}
+	}
+
+	private void visitNode(LogicalExpression node) {
 		if (node instanceof Conjunction) {
 			System.out.println("^");
 			((Conjunction) node).solve(this);
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
 		} else if (node instanceof Implication) {
-			//FIXME Generalizar 
+			// FIXME Generalizar
 			System.out.println(">");
 			((Implication) node).solve(this);
 		} else if (node instanceof Negation) {
@@ -161,7 +184,7 @@ public class Parser {
 	public LogicalExpression getRoot() {
 		return root;
 	}
-	
+
 	public void setRoot(LogicalExpression root) {
 		this.root = root;
 	}
