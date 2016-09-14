@@ -143,29 +143,6 @@ public class Parser {
 		visitNode(node);
 	}
 
-	// Percorrer AST de cima para baixo
-	public void walkPreOrderAST(LogicalOperator terminal, LogicalExpression node, LogicalExpression nonTerminal) {
-		if (node == null) {
-			return;
-		}
-
-		if (node instanceof Terminal) {
-			visitNode(node);
-			if (((Terminal) node).getBooleanValue() != null) {
-				System.out.println(((Terminal) node).getBooleanValue());
-			} else {
-				System.out.println(((Terminal) node).getValue());
-			}
-		} else if (node instanceof Negation) {
-			visitNode(node);
-			walkPostOrderAST(((Negation) node).getChild());
-		} else {
-			visitNode(node);
-			walkPostOrderAST(((NonTerminal) node).getLeftExpression());
-			walkPostOrderAST(((NonTerminal) node).getRightExpression());
-		}
-	}
-
 	private void visitNode(LogicalExpression node) {
 		if (node instanceof Conjunction) {
 			System.out.println("^");
