@@ -4,8 +4,19 @@ public class Disjunction extends NonTerminal {
 
 	@Override
 	public LogicalExpression solve() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+		// FIXME Apenas teste
+		Terminal left = null;
+		Terminal right = null;
+		if (getLeftExpression() instanceof Terminal)
+			left = (Terminal) getLeftExpression();
+		if (getRightExpression() instanceof Terminal)
+			right = (Terminal) getRightExpression();
+
+		if (left.booleanValue == true || right.booleanValue == true) {
+			Terminal trueTerminal = new Terminal(true);
+			return trueTerminal;
+		}
+		return this;
+	}
 }

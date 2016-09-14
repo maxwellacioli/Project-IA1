@@ -15,7 +15,7 @@ public class Negation extends LogicalExpression {
 	@Override
 	public LogicalExpression solve() {
 		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 }

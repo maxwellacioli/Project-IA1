@@ -6,7 +6,7 @@ public class BiImplication extends NonTerminal {
 	@Override
 	public LogicalExpression solve() {
 		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 }

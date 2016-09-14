@@ -19,6 +19,11 @@ public abstract class NonTerminal extends LogicalExpression {
 	public LogicalExpression getRightExpression() {
 		return rightExpression;
 	}
+	
+	public void childrenSolve() {
+		leftExpression = leftExpression.solve();
+		rightExpression = rightExpression.solve();
+	}
 
 	public void setNewChild(LogicalExpression nodeFather, LogicalExpression child, LogicalExpression newChild) {
 		if (nodeFather instanceof BiImplication) {

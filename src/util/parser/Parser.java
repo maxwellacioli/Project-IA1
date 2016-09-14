@@ -134,7 +134,6 @@ public class Parser {
 				System.out.println(((Terminal) node).getValue());
 			}
 		} else if (node instanceof Negation) {
-			// printVisit(node);
 			walkPostOrderAST(((Negation) node).getChild());
 		} else {
 			walkPostOrderAST(((NonTerminal) node).getLeftExpression());
@@ -146,13 +145,16 @@ public class Parser {
 	private void visitNode(LogicalExpression node) {
 		if (node instanceof Conjunction) {
 			System.out.println("^");
-			((Conjunction) node).solve(this);
+			Conjunction conjunction = (Conjunction) node;
+			node = conjunction.solve();
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
+			Disjunction disjunction = (Disjunction) node;
+			node = disjunction.solve();
 		} else if (node instanceof Implication) {
 			// FIXME Generalizar
 			System.out.println(">");
-			((Implication) node).solve(this);
+			// ((Implication) node).solve(this);
 		} else if (node instanceof Negation) {
 			System.out.println("~");
 		}

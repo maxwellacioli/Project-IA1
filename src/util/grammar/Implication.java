@@ -7,7 +7,7 @@ public class Implication extends NonTerminal {
 	@Override
 	public LogicalExpression solve() {
 
-		return null;
+		return this;
 	}
 
 	public void solve(Parser parser) {
