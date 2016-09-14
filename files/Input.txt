@@ -1,1 +1,1 @@
-(false ^ B) ^ B
+B ^ true

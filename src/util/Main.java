@@ -14,7 +14,7 @@ public class Main {
 		Parser parser = new Parser(lexer);
 		parser.build();
 		parser.printASTStack(parser.getRoot());
-		System.out.println("##### After Operation #####");
+		System.out.println("##### After Operations #####");
 		parser.printASTStack(parser.getRoot());
 
 	}
