@@ -1,1 +1,1 @@
-A ^ A ^ true
+A ^ A ^ true ^ B ^ A

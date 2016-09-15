@@ -8,19 +8,22 @@ public class Conjunction extends NonTerminal {
 		// TODO Auto-generated constructor stub
 	}
 
-	// TODO No retorno, retornar walkAST("novo nó")
+	// TODO Implementar o caso de notTerminal flag com valor true
 	@Override
 	public LogicalExpression solve() {
 
-		// Retorna um terminal false caso um do nós seja um terminal com valor
-		// false
 		if (leftExpression instanceof Terminal) {
 			Terminal left = (Terminal) leftExpression;
 
 			if (left.getBooleanValue() != null && left.getBooleanValue().equals(Boolean.FALSE)) {
 				return new Terminal(Boolean.FALSE);
-			} else if(left.getBooleanValue() != null && left.getBooleanValue().equals(Boolean.TRUE)) {
+			} else if (left.getBooleanValue() != null && left.getBooleanValue().equals(Boolean.TRUE)) {
 				return walkAST(rightExpression);
+			} else if (left.getValue() != null && rightExpression instanceof Terminal) {
+				Terminal right = (Terminal) rightExpression;
+				if (right.getValue() != null && left.getValue().equals(right.getValue())) {
+					return new Terminal(right.getValue());
+				}
 			}
 		}
 
@@ -29,8 +32,13 @@ public class Conjunction extends NonTerminal {
 
 			if (right.getBooleanValue() != null && right.booleanValue.equals(Boolean.FALSE)) {
 				return new Terminal(Boolean.FALSE);
-			} else if(right.getBooleanValue() != null && right.booleanValue.equals(Boolean.TRUE)) {
+			} else if (right.getBooleanValue() != null && right.booleanValue.equals(Boolean.TRUE)) {
 				return walkAST(leftExpression);
+			} else if (right.getValue() != null && leftExpression instanceof Terminal) {
+				Terminal left = (Terminal) leftExpression;
+				if (left.getValue() != null && right.getValue().equals(left.getValue())) {
+					return new Terminal(left.getValue());
+				}
 			}
 		}
 

@@ -2,14 +2,23 @@ package util.grammar;
 
 public class Terminal extends LogicalExpression {
 	protected Boolean booleanValue;
+	protected Boolean notTerminal = false;
 	protected String value;
-	
+
 	public Terminal(Boolean booleanValue) {
 		this.booleanValue = booleanValue;
 	}
-	
+
 	public Terminal(String value) {
 		this.value = value;
+	}
+
+	public Boolean getNotTerminal() {
+		return notTerminal;
+	}
+
+	public void setNotTerminal(Boolean notTerminal) {
+		this.notTerminal = notTerminal;
 	}
 
 	public Boolean getBooleanValue() {
@@ -25,10 +34,10 @@ public class Terminal extends LogicalExpression {
 		// TODO Auto-generated method stub
 		return this;
 	}
-	
+
 	@Override
 	public String toString() {
 		return value;
 	}
-	
+
 }
