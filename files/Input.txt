@@ -1,1 +1,1 @@
-A ^ A ^ true ^ B ^ A
+{P v Q, ~Q} |= P

@@ -22,7 +22,46 @@ public class Negation extends LogicalExpression {
 	
 	@Override
 	public LogicalExpression solve() {
-		// TODO Auto-generated method stub
+		if(child instanceof Operand) {
+			Operand childOperand = (Operand) child;
+
+			if(childOperand.getBooleanValue() != null) {
+				childOperand.changeBooleanValue();
+			} else {
+				childOperand.changeNotFlag();
+			}
+			
+			return childOperand;
+		} 
+		
+		if(child instanceof Conjunction) {
+			Disjunction disjunction = new Disjunction();
+			Negation leftNegation = new Negation();
+			Negation rightNegation = new Negation();
+			
+			leftNegation.setChild(((Conjunction) child).getLeftExpression());
+			rightNegation.setChild(((Conjunction) child).getRightExpression());
+			
+			disjunction.setLeftExpression(leftNegation);
+			disjunction.setRightExpression(rightNegation);
+			
+			return walkAST(disjunction);
+		}
+		
+		if(child instanceof Disjunction) {
+			Conjunction conjunction = new Conjunction();
+			Negation leftNegation = new Negation();
+			Negation rightNegation = new Negation();
+			
+			leftNegation.setChild(((Disjunction) child).getLeftExpression());
+			rightNegation.setChild(((Disjunction) child).getRightExpression());
+			
+			conjunction.setLeftExpression(leftNegation);
+			conjunction.setRightExpression(rightNegation);
+			
+			return walkAST(conjunction);
+		}
+		
 		return this;
 	}
 

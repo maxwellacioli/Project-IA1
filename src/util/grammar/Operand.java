@@ -2,7 +2,7 @@ package util.grammar;
 
 public class Operand extends LogicalExpression {
 	protected Boolean booleanValue;
-	protected Boolean notTerminal = false;
+	protected Boolean notFlag = false;
 	protected String value;
 
 	public Operand(Boolean booleanValue) {
@@ -13,14 +13,18 @@ public class Operand extends LogicalExpression {
 		this.value = value;
 	}
 
-	public Boolean getNotTerminal() {
-		return notTerminal;
+	public Boolean getNotFlag() {
+		return notFlag;
 	}
-
-	public void setNotTerminal(Boolean notTerminal) {
-		this.notTerminal = notTerminal;
+	
+	public void changeNotFlag() {
+		notFlag = !notFlag;
 	}
-
+	
+	public void changeBooleanValue() {
+		booleanValue = !booleanValue;
+	}
+	
 	public Boolean getBooleanValue() {
 		return booleanValue;
 	}

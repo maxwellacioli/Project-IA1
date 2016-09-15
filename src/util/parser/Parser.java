@@ -122,10 +122,15 @@ public class Parser {
 		}
 
 		if (node instanceof Operand) {
-			if (((Operand) node).getBooleanValue() != null) {
-				System.out.println(((Operand) node).getBooleanValue());
+			Operand operand = (Operand) node;
+			
+			if (operand.getBooleanValue() != null) {
+				System.out.println(operand.getBooleanValue());
 			} else {
-				System.out.println(((Operand) node).getValue());
+				System.out.println(operand.getValue());
+				if(operand.getNotFlag()) {
+					System.out.println("~");
+				}
 			}
 		} else
 
