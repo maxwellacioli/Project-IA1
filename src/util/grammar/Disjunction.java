@@ -14,7 +14,6 @@ public class Disjunction extends NonTerminal {
 		//
 		// }
 		// }
-		
 
 		return this;
 	}

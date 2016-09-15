@@ -37,8 +37,8 @@ public class Main {
 
 		parser.printAST(root);
 
-		// System.out.println("DebugStartPoint");
 		root = root.walkAST(root);
+		// System.out.println("DebugStartPoint");
 		System.out.println("##### AST After Operations #####");
 		parser.printAST(root);
 

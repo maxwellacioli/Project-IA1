@@ -1,1 +1,1 @@
-A ^ A ^ true ^ B ^ A
+A <> B

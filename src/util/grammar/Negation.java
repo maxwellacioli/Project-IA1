@@ -4,6 +4,14 @@ public class Negation extends LogicalExpression {
 
 	protected LogicalExpression child;
 	
+	public Negation() {
+
+	}
+	
+	public Negation(LogicalExpression child) {
+		this.child = child;
+	}
+	
 	public void setChild(LogicalExpression child) {
 		this.child = child;
 	}

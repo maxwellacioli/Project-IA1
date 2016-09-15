@@ -1,12 +1,6 @@
 package util.grammar;
 
-import util.parser.Parser;
-
 public class Conjunction extends NonTerminal {
-
-	public Conjunction() {
-		// TODO Auto-generated constructor stub
-	}
 
 	// TODO Implementar o caso de notTerminal flag com valor true
 	@Override

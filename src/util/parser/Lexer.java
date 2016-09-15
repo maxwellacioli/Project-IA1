@@ -58,7 +58,7 @@ public class Lexer {
 		input = input.replace(",", " ^ ");
 		input = input.replace("|=", " > ");
 		input = input.replace("<>", " <> ");
-		input = input.replace(">", " > ");
+		input = input.replaceAll("[^<]>", " > ");
 		input = input.replace("v", " v ");
 		input = input.replace("^", " ^ ");
 		input = input.replace("~", " ~ ");

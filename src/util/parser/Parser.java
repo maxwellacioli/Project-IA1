@@ -147,6 +147,8 @@ public class Parser {
 			System.out.println(">");
 		} else if (node instanceof Negation) {
 			System.out.println("~");
+		} else if(node instanceof BiImplication) {
+			System.out.println("<>");
 		}
 	}
 
