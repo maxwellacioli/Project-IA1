@@ -1,12 +1,12 @@
 package util;
 
-import util.grammar.Disjunction;
 import util.grammar.LogicalExpression;
-import util.grammar.Terminal;
+import util.grammar.Operand;
 import util.parser.Lexer;
 import util.parser.Parser;
 
-//TODO Mudar nomes
+//TODO Implementar DeMorgan na negação
+//FIXME Nomes de métodos e terminais confusos
 //TODO Criar (Heap/Hash) como tabela de simbolos terminais, 
 //para não ocorrer de dois terminais serem objtos diferentes
 // A v B é igual a: A v B v C
@@ -44,8 +44,8 @@ public class Main {
 
 		// FIXME Remover desta classe(Main)
 		System.out.println("##### Final Result #####");
-		if (root instanceof Terminal) {
-			Terminal terminalRoot = (Terminal) root;
+		if (root instanceof Operand) {
+			Operand terminalRoot = (Operand) root;
 			if (terminalRoot.getBooleanValue() != null && terminalRoot.getBooleanValue().equals(Boolean.TRUE)) {
 				System.out.println("Tautology");
 			} else {

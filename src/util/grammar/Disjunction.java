@@ -1,6 +1,6 @@
 package util.grammar;
 
-public class Disjunction extends NonTerminal {
+public class Disjunction extends Operator {
 
 	@Override
 	public LogicalExpression solve() {

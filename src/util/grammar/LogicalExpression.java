@@ -5,7 +5,7 @@ public abstract class LogicalExpression {
 	public abstract LogicalExpression solve();
 
 	public LogicalExpression walkAST(LogicalExpression node) {
-		if (node instanceof Terminal) {
+		if (node instanceof Operand) {
 			return node;
 		}
 
@@ -13,7 +13,7 @@ public abstract class LogicalExpression {
 			Negation negation = (Negation) node;
 			negation.child = walkAST(negation.child);
 		} else {
-			NonTerminal nonTerminal = (NonTerminal) node;
+			Operator nonTerminal = (Operator) node;
 			nonTerminal.leftExpression = walkAST(nonTerminal.leftExpression);
 			nonTerminal.rightExpression = walkAST((nonTerminal.rightExpression));
 		}

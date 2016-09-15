@@ -7,8 +7,8 @@ import util.grammar.Implication;
 import util.grammar.LogicalExpression;
 import util.grammar.LogicalOperator;
 import util.grammar.Negation;
-import util.grammar.NonTerminal;
-import util.grammar.Terminal;
+import util.grammar.Operator;
+import util.grammar.Operand;
 
 public class Parser {
 	private Lexer lexer;
@@ -98,11 +98,11 @@ public class Parser {
 	}
 
 	private void terminal() {
-		Terminal term;
+		Operand term;
 		if (currentToken.matches("[A-Z]")) {
-			term = new Terminal(currentToken);
+			term = new Operand(currentToken);
 		} else {
-			term = new Terminal(Boolean.valueOf(currentToken));
+			term = new Operand(Boolean.valueOf(currentToken));
 		}
 		root = term;
 		currentToken = nextToken();
@@ -121,19 +121,19 @@ public class Parser {
 			return;
 		}
 
-		if (node instanceof Terminal) {
-			if (((Terminal) node).getBooleanValue() != null) {
-				System.out.println(((Terminal) node).getBooleanValue());
+		if (node instanceof Operand) {
+			if (((Operand) node).getBooleanValue() != null) {
+				System.out.println(((Operand) node).getBooleanValue());
 			} else {
-				System.out.println(((Terminal) node).getValue());
+				System.out.println(((Operand) node).getValue());
 			}
 		} else
 
 		if (node instanceof Negation) {
 			printAST(((Negation) node).getChild());
 		} else {
-			printAST(((NonTerminal) node).getLeftExpression());
-			printAST(((NonTerminal) node).getRightExpression());
+			printAST(((Operator) node).getLeftExpression());
+			printAST(((Operator) node).getRightExpression());
 		}
 		visitNode(node);
 	}

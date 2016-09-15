@@ -1,6 +1,6 @@
 package util.grammar;
 
-public class BiImplication extends NonTerminal {
+public class BiImplication extends Operator {
 
 	@Override
 	public LogicalExpression solve() {

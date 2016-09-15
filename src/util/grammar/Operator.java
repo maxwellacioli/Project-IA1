@@ -1,13 +1,8 @@
 package util.grammar;
 
-public abstract class NonTerminal extends LogicalExpression {
+public abstract class Operator extends LogicalExpression {
 	protected LogicalExpression leftExpression;
 	protected LogicalExpression rightExpression;
-
-//	public NonTerminal(LogicalExpression leftExpression, LogicalExpression rightExpression) {
-//		this.leftExpression = leftExpression;
-//		this.rightExpression = rightExpression;
-//	}
 
 	public void setLeftExpression(LogicalExpression leftExpression) {
 		this.leftExpression = leftExpression;

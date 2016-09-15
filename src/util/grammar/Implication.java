@@ -1,6 +1,6 @@
 package util.grammar;
 
-public class Implication extends NonTerminal {
+public class Implication extends Operator {
 
 	@Override
 	public LogicalExpression solve() {

@@ -1,15 +1,15 @@
 package util.grammar;
 
-public class Terminal extends LogicalExpression {
+public class Operand extends LogicalExpression {
 	protected Boolean booleanValue;
 	protected Boolean notTerminal = false;
 	protected String value;
 
-	public Terminal(Boolean booleanValue) {
+	public Operand(Boolean booleanValue) {
 		this.booleanValue = booleanValue;
 	}
 
-	public Terminal(String value) {
+	public Operand(String value) {
 		this.value = value;
 	}
 
