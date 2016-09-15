@@ -6,17 +6,16 @@ public class Disjunction extends NonTerminal {
 	public LogicalExpression solve() {
 
 		// FIXME Apenas teste
-		Terminal left = null;
-		Terminal right = null;
-		if (getLeftExpression() instanceof Terminal)
-			left = (Terminal) getLeftExpression();
-		if (getRightExpression() instanceof Terminal)
-			right = (Terminal) getRightExpression();
+		// if (this.getLeftExpression() instanceof Terminal) {
+		// Terminal left = (Terminal) this.getLeftExpression();
+		// if (left.booleanValue == true) {
+		// Terminal trueTerminal = new Terminal(true);
+		// return trueTerminal;
+		//
+		// }
+		// }
+		
 
-		if (left.booleanValue == true || right.booleanValue == true) {
-			Terminal trueTerminal = new Terminal(true);
-			return trueTerminal;
-		}
 		return this;
 	}
 }

@@ -20,7 +20,7 @@ public class Parser {
 		currentToken = lexer.getStringTokenizer().nextToken();
 	}
 
-	public LogicalExpression build() {
+	public LogicalExpression buildTree() {
 		biImplication();
 		return root;
 	}
@@ -34,7 +34,6 @@ public class Parser {
 			implication();
 			biImp.setRightExpression(root);
 			root = biImp;
-			setChildrenFather(root);
 		}
 	}
 
@@ -47,7 +46,6 @@ public class Parser {
 			disjunction();
 			imp.setRightExpression(root);
 			root = imp;
-			setChildrenFather(root);
 		}
 	}
 
@@ -60,7 +58,6 @@ public class Parser {
 			conjunction();
 			disj.setRightExpression(root);
 			root = disj;
-			setChildrenFather(root);
 		}
 	}
 
@@ -73,7 +70,6 @@ public class Parser {
 			factor();
 			conj.setRightExpression(root);
 			root = conj;
-			setChildrenFather(root);
 		}
 	}
 
@@ -84,7 +80,6 @@ public class Parser {
 			try {
 				if (currentToken.equals(")")) {
 					currentToken = nextToken();
-					root.parentheses = true;
 				} else {
 					throw new ParserErrorException();
 				}
@@ -97,7 +92,6 @@ public class Parser {
 			factor();
 			neg.setChild(root);
 			root = neg;
-			setChildrenFather(root);
 		} else {
 			terminal();
 		}
@@ -122,7 +116,7 @@ public class Parser {
 		}
 	}
 
-	public void walkPostOrderAST(LogicalExpression node) {
+	public void printAST(LogicalExpression node) {
 		if (node == null) {
 			return;
 		}
@@ -133,11 +127,13 @@ public class Parser {
 			} else {
 				System.out.println(((Terminal) node).getValue());
 			}
-		} else if (node instanceof Negation) {
-			walkPostOrderAST(((Negation) node).getChild());
+		} else
+
+		if (node instanceof Negation) {
+			printAST(((Negation) node).getChild());
 		} else {
-			walkPostOrderAST(((NonTerminal) node).getLeftExpression());
-			walkPostOrderAST(((NonTerminal) node).getRightExpression());
+			printAST(((NonTerminal) node).getLeftExpression());
+			printAST(((NonTerminal) node).getRightExpression());
 		}
 		visitNode(node);
 	}
@@ -145,16 +141,10 @@ public class Parser {
 	private void visitNode(LogicalExpression node) {
 		if (node instanceof Conjunction) {
 			System.out.println("^");
-			Conjunction conjunction = (Conjunction) node;
-			node = conjunction.solve();
 		} else if (node instanceof Disjunction) {
 			System.out.println("v");
-			Disjunction disjunction = (Disjunction) node;
-			node = disjunction.solve();
 		} else if (node instanceof Implication) {
-			// FIXME Generalizar
 			System.out.println(">");
-			// ((Implication) node).solve(this);
 		} else if (node instanceof Negation) {
 			System.out.println("~");
 		}
@@ -166,14 +156,5 @@ public class Parser {
 
 	public void setRoot(LogicalExpression root) {
 		this.root = root;
-	}
-
-	private void setChildrenFather(LogicalExpression node) {
-		if (node instanceof Negation) {
-			((Negation) node).getChild().setFather(node);
-		} else if (node instanceof NonTerminal) {
-			((NonTerminal) node).getLeftExpression().setFather(node);
-			((NonTerminal) node).getRightExpression().setFather(node);
-		}
 	}
 }

@@ -1,16 +1,22 @@
 package util.grammar;
 
 public abstract class LogicalExpression {
-	//FIXME Consertar controle de acesso deste booleano
-	public boolean parentheses = false;
-	protected LogicalExpression father = null;
+
 	public abstract LogicalExpression solve();
-	
-	public void setFather(LogicalExpression father) {
-		this.father = father;
-	}
-	
-	public LogicalExpression getFather() {
-		return father;
+
+	public LogicalExpression walkAST(LogicalExpression node) {
+		if (node instanceof Terminal) {
+			return node;
+		}
+
+		if (node instanceof Negation) {
+			Negation negation = (Negation) node;
+			negation.child = walkAST(negation.child);
+		} else {
+			NonTerminal nonTerminal = (NonTerminal) node;
+			nonTerminal.leftExpression = walkAST(nonTerminal.leftExpression);
+			nonTerminal.rightExpression = walkAST((nonTerminal.rightExpression));
+		}
+		return node.solve();
 	}
 }
