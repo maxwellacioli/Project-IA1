@@ -1,5 +1,7 @@
 package util.grammar;
 
+import java.util.ArrayList;
+
 public class Disjunction extends Operator {
 
 	public LogicalExpression solve() {
@@ -61,8 +63,60 @@ public class Disjunction extends Operator {
 				}
 			}
 		}
+		
+		if(leftExpression.hasParentheses() || rightExpression.hasParentheses()) {
+			return walkAST(distribution());
+		}
 
 		return this;
+	}
+	
+	private LogicalExpression distribution() {
+		ArrayList<LogicalExpression> leftOperands = new ArrayList<LogicalExpression>();
+		ArrayList<LogicalExpression> rightOperands = new ArrayList<LogicalExpression>();
+		ArrayList<LogicalExpression> disjunctionList = new ArrayList<LogicalExpression>();
+		
+		getOperands(leftOperands, leftExpression);
+		getOperands(rightOperands, rightExpression);
+		
+		for (LogicalExpression left : leftOperands) {
+			for (LogicalExpression right : rightOperands) {
+				Disjunction disj = new Disjunction();
+				disj.setLeftExpression(left);
+				disj.setRightExpression(right);
+				disjunctionList.add(disj);
+			}
+		}
+
+		Conjunction conj = new Conjunction();
+		conj.setLeftExpression(disjunctionList.get(0));
+		conj.setRightExpression(disjunctionList.get(1));
+		
+		
+		if(disjunctionList.size() > 2) {
+			for (int i = 2; i < disjunctionList.size(); i++) {
+				Conjunction conjAux = new Conjunction();
+				conjAux.setLeftExpression(conj);
+				conjAux.setRightExpression(disjunctionList.get(i));
+				
+				conj = conjAux;
+			}
+		}
+		
+		return conj;
+	}
+
+	private void getOperands(ArrayList<LogicalExpression> operandsList, LogicalExpression node) {
+		if(node instanceof Operand || node instanceof Disjunction) {
+			operandsList.add(node);
+			return;
+		} 
+		
+		if(node instanceof Conjunction) {
+			Conjunction conjunction = (Conjunction) node;
+			getOperands(operandsList, conjunction.getLeftExpression());
+			getOperands(operandsList, conjunction.getRightExpression());
+		}
 	}
 
 	private Operand walkDisjunctionTree(String operandValue, Disjunction disjunctionOperator) {

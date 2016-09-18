@@ -1,5 +1,7 @@
 package util.grammar;
 
+import java.util.ArrayList;
+
 public class Conjunction extends Operator {
 
 	// TODO Implementar o caso de notTerminal flag com valor true
@@ -63,8 +65,61 @@ public class Conjunction extends Operator {
 				}
 			}
 		}
+		
+		if(leftExpression.hasParentheses() || rightExpression.hasParentheses()) {
+			return walkAST(distribution());
+		}
 
 		return this;
+	}
+
+	
+	private LogicalExpression distribution() {
+		ArrayList<LogicalExpression> leftOperands = new ArrayList<LogicalExpression>();
+		ArrayList<LogicalExpression> rightOperands = new ArrayList<LogicalExpression>();
+		ArrayList<LogicalExpression> conjunctionList = new ArrayList<LogicalExpression>();
+		
+		getOperands(leftOperands, leftExpression);
+		getOperands(rightOperands, rightExpression);
+		
+		for (LogicalExpression left : leftOperands) {
+			for (LogicalExpression right : rightOperands) {
+				Conjunction conj = new Conjunction();
+				conj.setLeftExpression(left);
+				conj.setRightExpression(right);
+				conjunctionList.add(conj);
+			}
+		}
+
+		Disjunction disj = new Disjunction();
+		disj.setLeftExpression(conjunctionList.get(0));
+		disj.setRightExpression(conjunctionList.get(1));
+		
+		
+		if(conjunctionList.size() > 2) {
+			for (int i = 2; i < conjunctionList.size(); i++) {
+				Disjunction disjAux = new Disjunction();
+				disjAux.setLeftExpression(disj);
+				disjAux.setRightExpression(conjunctionList.get(i));
+				
+				disj = disjAux;
+			}
+		}
+		
+		return disj;
+	}
+
+	private void getOperands(ArrayList<LogicalExpression> operandsList, LogicalExpression node) {
+		if(node instanceof Operand || node instanceof Conjunction) {
+			operandsList.add(node);
+			return;
+		} 
+		
+		if(node instanceof Disjunction) {
+			Disjunction disjunction = (Disjunction) node;
+			getOperands(operandsList, disjunction.getLeftExpression());
+			getOperands(operandsList, disjunction.getRightExpression());
+		}
 	}
 
 	private Operand walkConjunctionTree(String operandValue, Conjunction conjunctionOperator) {

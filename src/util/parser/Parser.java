@@ -79,6 +79,7 @@ public class Parser {
 			biImplication();
 			try {
 				if (currentToken.equals(")")) {
+					root.setParentheses();
 					currentToken = nextToken();
 				} else {
 					throw new ParserErrorException();

@@ -2,7 +2,17 @@ package util.grammar;
 
 public abstract class LogicalExpression {
 
+	private Boolean parentheses = false;
+
 	public abstract LogicalExpression solve();
+
+	public Boolean hasParentheses() {
+		return parentheses;
+	}
+
+	public void setParentheses() {
+		parentheses = !parentheses;
+	}
 
 	public LogicalExpression walkAST(LogicalExpression node) {
 		if (node instanceof Operand) {

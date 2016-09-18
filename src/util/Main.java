@@ -36,9 +36,9 @@ public class Main {
 		LogicalExpression root = parser.getRoot();
 
 		parser.printAST(root);
-		
-		root = root.walkAST(root);
 		// System.out.println("DebugStartPoint");
+
+		root = root.walkAST(root);
 		System.out.println("##### AST After Operations #####");
 		parser.printAST(root);
 
